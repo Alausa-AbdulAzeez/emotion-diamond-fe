@@ -16,18 +16,22 @@ const EmptyStateWithNavLink = ({
   return (
     <div className=" flex justify-center items-center flex-col">
       <img src={image} alt="Empty" className={`${imgStyles}`} />
-      <h4 className={`${mainTextStyles || " text-primary text-sm font-bold"}`}>
+      <h4
+        className={`${
+          mainTextStyles || " text-primary text-sm font-bold 2xl:text-lg"
+        }`}
+      >
         {mainText}
       </h4>
       <p
         className={`${
           subTextStyles || "font-normal text-primary"
-        }  text-center w-[90%] md:w-full`}
+        }  text-center w-[90%] md:w-full 2xl:text-lg`}
       >
         {subText}{" "}
         {linkText && (
           <Link
-            className="text-sm font-bold underline hover:opacity-55 transition-all ease-in-out duration-300"
+            className="text-sm font-bold underline hover:opacity-55 transition-all ease-in-out duration-300 2xl:text-lg"
             to={link}
           >
             {linkText}
@@ -39,7 +43,7 @@ const EmptyStateWithNavLink = ({
           <img src={arrow_down} alt="arrow down" className="h-8 mt-4 bounce" />
           <Link to={link}>
             {" "}
-            <button className="bg-primary mt-8 text-white h-[48px] rounded-[60px] w-[174px] text-sm font-bold">
+            <button className="bg-primary mt-8 text-white h-[48px] rounded-[60px] w-[174px] text-sm 2xl:text-lg font-bold ">
               Click here{" "}
             </button>
           </Link>

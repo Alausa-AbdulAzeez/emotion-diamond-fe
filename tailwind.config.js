@@ -10,6 +10,9 @@ export default {
           20: "#0000002d",
         },
       },
+      screens: {
+        "3xl": "1800px",
+      },
     },
   },
   plugins: [],
