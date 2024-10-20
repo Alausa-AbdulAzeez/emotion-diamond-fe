@@ -9,3 +9,10 @@
   font-family: "Quicksand", sans-serif;
 }
 
+.add__grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url("./assets/images/grid.svg");
+}
+

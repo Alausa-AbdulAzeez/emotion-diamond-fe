@@ -7,6 +7,7 @@ export default {
         primary: {
           DEFAULT: "rgb(34, 34, 34)",
           10: "#3e3e3e",
+          20: "#0000002d",
         },
       },
     },

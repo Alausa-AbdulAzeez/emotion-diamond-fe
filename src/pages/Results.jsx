@@ -2,10 +2,10 @@ import BottomNav from "../components/BottomNav";
 import { HomeView } from "../components/home";
 import { ResultsView } from "../components/results";
 
-const Home = () => {
+const Results = () => {
   return (
-    <div className="h-[100vh] flex">
-      <div className="flex-1 h-full overflow-auto relative">
+    <div className="h-[100vh] flex add__grid w-full ">
+      <div className="flex w-full h-full items-center justify-center">
         <ResultsView />
       </div>
       <BottomNav />
@@ -13,4 +13,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Results;

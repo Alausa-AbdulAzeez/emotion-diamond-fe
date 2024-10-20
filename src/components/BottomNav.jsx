@@ -10,7 +10,7 @@ const BottomNav = () => {
 
   return (
     <div className="w-full fixed bottom-10 flex justify-center items-center">
-      <div className="h-[60px] min-w-[200px] bg-primary-10 rounded p-1 flex gap-1">
+      <div className="h-[60px] min-w-[200px] bg-primary-20 rounded p-1 flex gap-1 ">
         {tabs?.map((tab) => {
           const { id, label, url } = tab;
           return <NavItem label={label} key={id} url={url} />;
