@@ -34,7 +34,7 @@ const ResultsView = () => {
 
   useEffect(() => {
     getLastAnalysedVideo();
-  }, []);
+  }, [analysisResult?.loading]);
 
   // const data = [65, 59, 90, 81, 56];
 

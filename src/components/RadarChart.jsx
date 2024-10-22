@@ -50,6 +50,14 @@ const RadarChart = ({ data, labels }) => {
           color: "#999", // Lines radiating from the center
           //   lineWidth: 2, // Thickness of angle lines
         },
+        pointLabels: {
+          color: "rgb(0,0,0)", // Color of the point labels
+          font: {
+            size: 16, // Font size of the point labels
+          },
+          padding: 5, // Padding around point labels
+          callback: (label) => label.toUpperCase(), // Convert labels to uppercase
+        },
       },
     },
     plugins: {
@@ -64,7 +72,7 @@ const RadarChart = ({ data, labels }) => {
   };
 
   return (
-    <div className="h-[85%] w-[100%]" style={{ width: "100%", margin: "auto" }}>
+    <div className="h-[85%] w-[70%] 2xl:w-[80%] " style={{ margin: "auto" }}>
       <Radar data={chartData} options={options} />
     </div>
   );
