@@ -14,7 +14,7 @@ const EmptyStateWithNavLink = ({
   linkText,
 }) => {
   return (
-    <div className=" flex justify-center items-center flex-col">
+    <div className="w-full h-full flex justify-center items-center flex-col">
       <img src={image} alt="Empty" className={`${imgStyles}`} />
       <h4
         className={`${

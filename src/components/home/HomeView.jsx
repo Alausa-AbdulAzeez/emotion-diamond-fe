@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { analyzeVideo } from "../../redux/thunks/videoAnalysisThunks";
 import { API_SUCCESS_VARIABLE } from "../../utils/config";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const HomeView = () => {
   const dispatch = useDispatch();
@@ -135,11 +135,25 @@ const HomeView = () => {
     }
   };
 
+  if (file) {
+    localStorage.setItem(
+      "lastAnalysedVideoURL",
+      JSON.stringify(URL.createObjectURL(file))
+    );
+  }
   // Function to handle video analysis
   const handleAnalyzeVideo = async () => {
+    console.log(file);
     try {
       const res = await dispatch(analyzeVideo({ dispatchData: file, toastId }));
       if (res?.payload?.status === API_SUCCESS_VARIABLE) {
+        console.log(file);
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          const base64String = reader.result;
+          localStorage.setItem("lastAnalysedVideoURL", base64String); // Save Base64 in localStorage
+        };
         navigate("/results"); // Navigate to the results page if the video was successfully analysed
       }
     } catch (error) {
@@ -149,7 +163,7 @@ const HomeView = () => {
   // End of function to handle video analysis
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
+    <div className="w-full h-full flex flex-col items-center justify-center">
       <div
         className={`relative w-[300px] md:w-[450px] 2xl:w-[600px]  flex justify-center h-[205px] 2xl:h-[310px] rounded p-6  border border-gray-200 ${
           dragActive ? "bg-blue-100" : "bg-[#f5f5f5]"
@@ -256,6 +270,19 @@ const HomeView = () => {
             </div>
           </div>
         )}
+      </div>
+      <div className="text-primary font-medium">
+        No file to test with? Click{" "}
+        <Link
+          className="underline font-bold"
+          target="_blank"
+          to={
+            "https://www.pexels.com/video/close-up-video-of-man-wearing-red-hoodie-3249935/"
+          }
+        >
+          here
+        </Link>{" "}
+        to download one.
       </div>
     </div>
   );
