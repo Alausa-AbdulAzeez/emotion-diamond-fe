@@ -7,7 +7,6 @@ import { analyzeVideo } from "../../redux/thunks/videoAnalysisThunks";
 import { API_SUCCESS_VARIABLE } from "../../utils/config";
 import { Link, useNavigate } from "react-router-dom";
 import { openDB } from "idb";
-import { initDB } from "../../utils/db";
 
 const HomeView = () => {
   const dispatch = useDispatch();
@@ -65,7 +64,20 @@ const HomeView = () => {
   };
 
   const handleFileInputChange = async (event) => {
+    const fileToBeUploaded = event.target.files[0];
     handleFileUpload(event.target.files[0]);
+
+    // Open IndexedDB and create a store if it doesn't exist
+    const db = await openDB("videoAnalysisDB", 1, {
+      upgrade(db) {
+        if (!db.objectStoreNames.contains("videos")) {
+          db.createObjectStore("videos", { keyPath: "id" });
+        }
+      },
+    });
+
+    // Store the file directly in IndexedDB
+    await db.put("videos", { id: "lastAnalysedVideo", fileToBeUploaded });
 
     // Clear the input value to allow re-selection of the same file
     event.target.value = null;
@@ -147,14 +159,8 @@ const HomeView = () => {
   const handleAnalyzeVideo = async () => {
     try {
       const res = await dispatch(analyzeVideo({ dispatchData: file, toastId }));
+      console.log(res);
       if (res?.payload?.status === API_SUCCESS_VARIABLE) {
-        // Open IndexedDB and create a store if it doesn't exist
-        const fileToBeUploaded = file;
-
-        // Initialize the database and store the file directly
-        const db = await initDB();
-        await db.put("videos", { id: "lastAnalysedVideo", fileToBeUploaded });
-
         navigate("/results"); // Navigate to the results page if the video was successfully analysed
       }
     } catch (error) {
@@ -166,7 +172,7 @@ const HomeView = () => {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
       <div
-        className={`relative w-[300px] md:w-[450px] 2xl:w-[600px]  flex justify-center h-[205px] 2xl:h-[310px] rounded p-6  border border-gray-200 ${
+        className={`relative w-[300px] md:w-[450px] 2xl:w-[600px]  flex justify-center h-[205px] 2xl:h-[310px] rounded p-3 md:p-6  border border-gray-200 ${
           dragActive ? "bg-blue-100" : "bg-[#f5f5f5]"
         }`}
         onDragOver={handleDragOver}
@@ -272,7 +278,7 @@ const HomeView = () => {
           </div>
         )}
       </div>
-      <div className="text-primary font-medium">
+      <div className="text-primary font-medium w-[80%] text-center">
         No file to test with? Click{" "}
         <Link
           className="underline font-bold"

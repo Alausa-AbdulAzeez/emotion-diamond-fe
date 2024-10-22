@@ -12,6 +12,10 @@ const EmptyStateWithNavLink = ({
   showNavBtn,
   link,
   linkText,
+  action,
+  disabledState,
+  actionButtonText,
+  showActionBtn,
 }) => {
   return (
     <div className="w-full h-full flex justify-center items-center flex-col">
@@ -48,6 +52,16 @@ const EmptyStateWithNavLink = ({
             </button>
           </Link>
         </>
+      )}
+      {showActionBtn && (
+        <button
+          type="button"
+          className={`transition-all ease-in-out duration-300 opacity-100 bg-primary mt-7 hover:opacity-70 disabled:opacity-55 disabled:cursor-not-allowed text-white h-[40px] 2xl:h-[48px] rounded w-[150px] 2xl:w-[174px] text-sm 2xl:text-lg font-bold`}
+          onClick={action}
+          disabled={disabledState}
+        >
+          {actionButtonText}
+        </button>
       )}
     </div>
   );

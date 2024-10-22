@@ -76,7 +76,7 @@ export const analyzeVideo = createAsyncThunk(
     } catch (error) {
       handleApiError(error, toastId);
       console.error(error);
-      return rejectWithValue(error.response.data || "Something went wrong");
+      return rejectWithValue(error?.response?.data || "Something went wrong");
     }
   }
 );

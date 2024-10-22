@@ -26,7 +26,7 @@ const RadarChart = ({ data, labels }) => {
     labels: labels,
     datasets: [
       {
-        label: "Sample Data",
+        label: "Data",
         data: data,
         backgroundColor: "rgba(54, 162, 235, 0.2)",
         borderColor: "rgba(54, 162, 235, 1)",
@@ -72,7 +72,10 @@ const RadarChart = ({ data, labels }) => {
   };
 
   return (
-    <div className="h-[85%] w-[70%] 2xl:w-[80%] " style={{ margin: "auto" }}>
+    <div
+      className="h-[85%] w-full md:w-[70%] 2xl:w-[80%] flex items-center justify-center  4xl:flex 4xl:items-center "
+      style={{ margin: "auto" }}
+    >
       <Radar data={chartData} options={options} />
     </div>
   );

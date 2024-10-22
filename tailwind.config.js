@@ -12,6 +12,7 @@ export default {
       },
       screens: {
         "3xl": "1800px",
+        "4xl": "2200px",
       },
     },
   },

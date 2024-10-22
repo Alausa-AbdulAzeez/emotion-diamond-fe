@@ -25,7 +25,7 @@ const videoAnalyzerSlice = createSlice({
       })
       .addCase(analyzeVideo.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = true;
       });
     //   .addCase(deleteJob.pending, (state) => {
     //     state.loading = true;
