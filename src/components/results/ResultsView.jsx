@@ -4,21 +4,36 @@ import { ghost } from "../../assets/images";
 import { useSelector } from "react-redux";
 import RadarChart from "../RadarChart";
 import VideoPlayer from "../VideoPlayer";
+import { openDB } from "idb";
+import { initDB } from "../../utils/db";
 
 const ResultsView = () => {
   const [videoURL, setVideoURL] = useState("");
 
   const analysisResult = useSelector((state) => state.analysisResult);
 
-  useEffect(() => {
-    // Get last saved video from local storage
-    const savedVideo = localStorage.getItem("lastAnalysedVideoURL");
-    console.log(savedVideo);
-    if (savedVideo) {
-      const savedVidoeURL = JSON.parse(savedVideo);
-      setVideoURL(savedVidoeURL);
-      console.log(savedVidoeURL);
+  const getLastAnalysedVideo = async () => {
+    try {
+      const db = await initDB();
+
+      const videoData = await db.get("videos", "lastAnalysedVideo");
+      console.log(videoData);
+      if (videoData && videoData.fileToBeUploaded) {
+        const fileURL = URL.createObjectURL(videoData.fileToBeUploaded);
+        setVideoURL(fileURL);
+
+        return videoData.file;
+      } else {
+        console.log("No video found");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error retrieving the video:", error);
     }
+  };
+
+  useEffect(() => {
+    getLastAnalysedVideo();
   }, []);
 
   // const data = [65, 59, 90, 81, 56];

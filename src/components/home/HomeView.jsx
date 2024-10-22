@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { analyzeVideo } from "../../redux/thunks/videoAnalysisThunks";
 import { API_SUCCESS_VARIABLE } from "../../utils/config";
 import { Link, useNavigate } from "react-router-dom";
+import { openDB } from "idb";
+import { initDB } from "../../utils/db";
 
 const HomeView = () => {
   const dispatch = useDispatch();
@@ -62,7 +64,7 @@ const HomeView = () => {
     }
   };
 
-  const handleFileInputChange = (event) => {
+  const handleFileInputChange = async (event) => {
     handleFileUpload(event.target.files[0]);
 
     // Clear the input value to allow re-selection of the same file
@@ -143,17 +145,16 @@ const HomeView = () => {
   }
   // Function to handle video analysis
   const handleAnalyzeVideo = async () => {
-    console.log(file);
     try {
       const res = await dispatch(analyzeVideo({ dispatchData: file, toastId }));
       if (res?.payload?.status === API_SUCCESS_VARIABLE) {
-        console.log(file);
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-          const base64String = reader.result;
-          localStorage.setItem("lastAnalysedVideoURL", base64String); // Save Base64 in localStorage
-        };
+        // Open IndexedDB and create a store if it doesn't exist
+        const fileToBeUploaded = file;
+
+        // Initialize the database and store the file directly
+        const db = await initDB();
+        await db.put("videos", { id: "lastAnalysedVideo", fileToBeUploaded });
+
         navigate("/results"); // Navigate to the results page if the video was successfully analysed
       }
     } catch (error) {
