@@ -27,14 +27,6 @@ const videoAnalyzerSlice = createSlice({
         state.loading = false;
         state.error = true;
       });
-    //   .addCase(deleteJob.pending, (state) => {
-    //     state.loading = true;
-    //     state.error = null;
-    //   })
-    //   .addCase(deleteJob.fulfilled, (state) => {
-    //     state.loading = false;
-    //     state.data = null; //
-    //   });
   },
 });
 
